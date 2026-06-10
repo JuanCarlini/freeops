@@ -223,7 +223,7 @@ function ValuesSection() {
 
         <motion.div className="mt-16" {...fadeUp(0.2)}>
           <Button href="/contacto" variant="outline">
-            Trabajemos juntos →
+            Pedir diagnóstico →
           </Button>
         </motion.div>
       </div>

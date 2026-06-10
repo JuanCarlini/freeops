@@ -6,7 +6,7 @@ export function Footer() {
 
   return (
     <footer style={{ backgroundColor: 'var(--color-brand)' }}>
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-16 pb-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-16 pb-[calc(2.5rem+env(safe-area-inset-bottom))] md:pb-24">
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12 mb-14">
 
           {/* Brand */}

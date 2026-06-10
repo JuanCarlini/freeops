@@ -112,10 +112,10 @@ function HeroSection() {
               style={{ opacity: ctaOpacity, y: ctaY }}
             >
               <Button href="/contacto" variant="primary">
-                Diagnóstico gratuito →
+                Pedir diagnóstico →
               </Button>
               <Button href="/servicios" variant="outline">
-                Servicios
+                Ver servicios
               </Button>
             </motion.div>
           </div>
@@ -323,7 +323,7 @@ function ManifestoSection() {
       className="min-h-[90dvh] flex flex-col justify-center"
       style={{ backgroundColor: 'var(--color-bg)' }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-14 py-28">
+      <div className="max-w-7xl mx-auto px-6 lg:px-14 py-28 w-full">
         <motion.p
           className="text-headline"
           style={{
@@ -488,7 +488,7 @@ function CasosSection() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <Button href="/contacto" variant="outline">
-            Sé el primer caso publicado →
+            Pedir diagnóstico →
           </Button>
         </motion.div>
       </div>
@@ -503,7 +503,7 @@ function CTASection() {
       className="min-h-[60dvh] flex flex-col justify-center"
       style={{ backgroundColor: 'var(--color-brand)' }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-14 py-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-14 py-24 w-full">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -524,23 +524,9 @@ function CTASection() {
             </span>
           </h2>
 
-          <Link
-            to="/contacto"
-            className="inline-flex items-center font-sans font-semibold text-sm px-8 py-4 transition-all duration-200"
-            style={{
-              backgroundColor: 'var(--color-on-brand)',
-              color: 'var(--color-brand)',
-              borderRadius: 'var(--radius-md)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '0.88'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '1'
-            }}
-          >
-            Pedirlo ahora →
-          </Link>
+          <Button href="/contacto" variant="inverse" className="px-8 py-4">
+            Pedir diagnóstico →
+          </Button>
         </motion.div>
       </div>
     </section>

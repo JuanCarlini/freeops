@@ -126,7 +126,7 @@ function ServiceItem({ service, index }: { service: Service; index: number }) {
 
                 <div className="mt-8">
                   <Button href="/contacto" variant="primary">
-                    Consultar →
+                    Pedir diagnóstico →
                   </Button>
                 </div>
               </div>
@@ -211,7 +211,7 @@ export function ServiciosPage() {
             </p>
           </motion.div>
           <Button href="/contacto" variant="primary" className="shrink-0">
-            Diagnóstico gratuito →
+            Pedir diagnóstico →
           </Button>
         </div>
       </section>

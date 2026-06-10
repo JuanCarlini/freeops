@@ -163,7 +163,7 @@ export function CasosPage() {
               Si tenés un proceso que se hace a mano, podemos automatizarlo.
             </p>
             <Button href="/contacto" variant="primary">
-              Solicitar diagnóstico →
+              Pedir diagnóstico →
             </Button>
           </motion.div>
         </div>

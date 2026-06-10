@@ -19,7 +19,7 @@ export function RootLayout() {
     >
       <CustomCursor />
       <Nav />
-      <main className="flex-1 pb-16">
+      <main className="flex-1">
         <Outlet />
       </main>
       <Footer />
