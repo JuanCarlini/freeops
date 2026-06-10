@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CONTACT_EMAIL } from '@/models/contact.data'
 
 interface FormData {
   nombre: string
@@ -17,8 +18,6 @@ const INITIAL: FormData = {
   area: '',
   descripcion: '',
 }
-
-const CONTACT_EMAIL = 'juanandrescarlini@gmail.com'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
