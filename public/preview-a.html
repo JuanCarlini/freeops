@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FREEOPS — Opción A: Noche técnica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      oklch(0.10 0.015 263);
+      --surface: oklch(0.15 0.03 263);
+      --border:  oklch(0.22 0.06 263);
+      --heading: oklch(0.94 0.008 263);
+      --text:    oklch(0.66 0.04 265);
+      --muted:   oklch(0.44 0.04 265);
+      --accent:  oklch(0.58 0.22 255);
+      --brand:   oklch(0.16 0.10 263);
+
+      --f-display: 'Barlow Condensed', sans-serif;
+      --f-body:    'Barlow', sans-serif;
+    }
+
+    html { background: var(--bg); color: var(--text); font-family: var(--f-body); -webkit-font-smoothing: antialiased; }
+
+    /* ---------- NAV ---------- */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      z-index: 10;
+    }
+    .nav-logo {
+      font-family: var(--f-display); font-weight: 800; font-size: 1rem;
+      letter-spacing: 0.10em; text-transform: uppercase;
+      color: var(--heading); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-family: var(--f-body); font-size: 0.8rem; font-weight: 500;
+      color: var(--muted); text-decoration: none;
+    }
+    .nav-cta {
+      font-family: var(--f-body); font-size: 0.78rem; font-weight: 600;
+      color: var(--accent); text-decoration: none;
+      border: 1px solid oklch(0.35 0.18 255);
+      padding: 5px 14px;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding: 136px 52px 72px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-sys {
+      font-family: var(--f-body); font-size: 0.7rem; font-weight: 500;
+      color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: var(--f-display); font-weight: 800; text-transform: uppercase;
+      font-size: clamp(4rem, 9vw, 8rem);
+      letter-spacing: -0.01em; line-height: 0.93;
+      color: var(--heading);
+      max-width: 880px; margin-bottom: 36px;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero p {
+      font-size: 0.95rem; font-weight: 400; line-height: 1.68;
+      color: var(--text); max-width: 52ch; margin-bottom: 40px;
+    }
+    .btn-solid {
+      display: inline-block; font-family: var(--f-body); font-size: 0.78rem;
+      font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--bg); background: var(--accent);
+      padding: 10px 22px; text-decoration: none;
+    }
+    .btn-line {
+      display: inline-block; font-family: var(--f-body); font-size: 0.78rem;
+      font-weight: 500; color: var(--text);
+      border: 1px solid var(--border); padding: 10px 22px;
+      text-decoration: none; margin-left: 12px;
+    }
+
+    /* ---------- SERVICES ---------- */
+    .services { border-bottom: 1px solid var(--border); }
+    .services-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 48px 52px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .services-head h2 {
+      font-family: var(--f-display); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      letter-spacing: 0.02em; color: var(--heading);
+    }
+    .services-count {
+      font-family: var(--f-body); font-size: 0.68rem; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.10em;
+    }
+    .svc-row {
+      display: grid; grid-template-columns: 80px 1fr auto;
+      align-items: baseline; padding: 22px 52px;
+      border-bottom: 1px solid var(--border); gap: 28px;
+    }
+    .svc-id {
+      font-family: var(--f-body); font-size: 0.65rem; font-weight: 600;
+      color: var(--accent); letter-spacing: 0.12em;
+    }
+    .svc-name {
+      font-family: var(--f-display); font-size: 1.55rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.03em; color: var(--heading);
+    }
+    .svc-tag {
+      font-family: var(--f-body); font-size: 0.7rem; font-weight: 400;
+      color: var(--muted); letter-spacing: 0.04em;
+    }
+
+    /* ---------- CTA ---------- */
+    .cta {
+      background: var(--surface);
+      padding: 72px 52px;
+      border-bottom: 1px solid var(--border);
+    }
+    .cta-inner {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; gap: 48px;
+    }
+    .cta h3 {
+      font-family: var(--f-display); font-weight: 800; text-transform: uppercase;
+      font-size: clamp(2.2rem, 4.5vw, 4rem);
+      letter-spacing: -0.005em; line-height: 0.96;
+      color: var(--heading); max-width: 640px;
+    }
+    .cta h3 span { color: var(--accent); }
+
+    /* ---------- FOOTER ---------- */
+    .footer { padding: 40px 52px; background: var(--brand); }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-logo {
+      font-family: var(--f-display); font-weight: 800; font-size: 1.3rem;
+      color: var(--heading); letter-spacing: 0.10em; text-transform: uppercase;
+    }
+    .footer-right { display: flex; gap: 40px; }
+    .footer-link {
+      font-family: var(--f-body); font-size: 0.75rem; font-weight: 400;
+      color: oklch(0.48 0.06 265); text-decoration: none;
+    }
+
+    /* ---------- LABEL ---------- */
+    .label {
+      position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: var(--bg);
+      font-family: var(--f-body); font-size: 0.62rem; font-weight: 800;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 4px 14px; z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <div class="label">Opción A — Noche técnica</div>
+
+  <nav>
+    <a href="#" class="nav-logo">Freeops</a>
+    <ul class="nav-links">
+      <li><a href="#">Servicios</a></li>
+      <li><a href="#">Casos</a></li>
+      <li><a href="#">Nosotros</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Diagnóstico →</a>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-sys">SYS / Automatización operacional</p>
+    <h1>Liberar<br><em>operaciones.</em></h1>
+    <p>Construimos sistemas que procesan lo que tu equipo no debería hacer a mano. Tickets, facturas, integraciones: automatizados con logs, errores controlados y documentación real.</p>
+    <a href="#" class="btn-solid">Diagnóstico gratuito</a>
+    <a href="#" class="btn-line">Ver casos</a>
+  </section>
+
+  <section class="services">
+    <div class="services-head">
+      <h2>Verticales operativas</h2>
+      <span class="services-count">05 servicios activos</span>
+    </div>
+    <div class="svc-row">
+      <span class="svc-id">SVC.01</span>
+      <span class="svc-name">Customer Ops</span>
+      <span class="svc-tag">Atención automatizada</span>
+    </div>
+    <div class="svc-row">
+      <span class="svc-id">SVC.02</span>
+      <span class="svc-name">Finanzas y Admin</span>
+      <span class="svc-tag">Facturación y reportes</span>
+    </div>
+    <div class="svc-row">
+      <span class="svc-id">SVC.03</span>
+      <span class="svc-name">Sales y CRM</span>
+      <span class="svc-tag">Pipeline automatizado</span>
+    </div>
+    <div class="svc-row">
+      <span class="svc-id">SVC.04</span>
+      <span class="svc-name">Agentes de IA</span>
+      <span class="svc-tag">LLM integrado al proceso</span>
+    </div>
+    <div class="svc-row">
+      <span class="svc-id">SVC.05</span>
+      <span class="svc-name">Integraciones</span>
+      <span class="svc-tag">Sistemas conectados</span>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-inner">
+      <h3>El diagnóstico<br>identifica el<br><span>punto de impacto.</span></h3>
+      <a href="#" class="btn-solid">Pedilo gratis →</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-logo">Freeops</span>
+      <div class="footer-right">
+        <a href="#" class="footer-link">hola@freeops.ai</a>
+        <a href="#" class="footer-link">Rosario, Argentina</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

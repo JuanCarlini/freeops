@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* ─── Fonts ──────────────────────────────────────────────────────────────── */
+/* Geist Variable — wght 100-900, single family for display + body           */
+/* Geist Mono Variable — wght 100-900, for technical labels + code           */
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+/* ─── Design Tokens ─────────────────────────────────────────────────────── */
+@theme {
+  /* Colors — warm cream #f0eee6 base + navy brand */
+  --color-bg:         oklch(0.940 0.012 87);  /* #f0eee6 */
+  --color-surface:    oklch(0.920 0.014 87);
+  --color-surface-2:  oklch(0.900 0.016 87);
+  --color-border:     oklch(0.858 0.020 87);
+  --color-muted:      oklch(0.50 0.05 87);
+  --color-text:       oklch(0.28 0.08 265);
+  --color-heading:    oklch(0.18 0.12 263);
+
+  /* Brand */
+  --color-brand:      oklch(0.20 0.12 263);   /* #002157 deep navy */
+  --color-brand-mid:  oklch(0.32 0.10 263);   /* mid navy for hover states */
+  --color-accent:     oklch(0.50 0.18 255);   /* medium blue interactive */
+  --color-on-brand:   oklch(0.940 0.012 87);  /* warm cream on brand bg */
+
+  /* Typography — single sans family, weight contrast drives hierarchy        */
+  /* Geist Variable: display (wght 800) + body (wght 400) same family        */
+  --font-display: "Geist Variable", system-ui, sans-serif;
+  --font-sans:    "Geist Variable", system-ui, sans-serif;
+  --font-mono:    "Geist Mono Variable", "Courier New", monospace;
+
+  /* Radius — near-sharp, slight softening */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+
+  /* Animations */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+}
+
+/* ─── Base Reset ──────────────────────────────────────────────────────────── */
+/* Wrapped in @layer base so Tailwind utilities (@layer utilities) take        */
+/* precedence over this reset — without this, padding:0 overrides pt-*, py-*  */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    background-color: var(--color-bg);
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+/* ─── Custom Cursor ──────────────────────────────────────────────────────── */
+.cursor-active,
+.cursor-active a,
+.cursor-active button,
+.cursor-active [role="button"],
+.cursor-active label {
+  cursor: none;
+}
+.cursor-active input,
+.cursor-active textarea,
+.cursor-active select {
+  cursor: text;
+}
+
+/* ─── Selection ──────────────────────────────────────────────────────────── */
+::selection {
+  background-color: var(--color-brand);
+  color: var(--color-on-brand);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-muted); }
+
+/* ─── Typography Utilities ───────────────────────────────────────────────── */
+.font-display { font-family: var(--font-display); }
+.font-mono    { font-family: var(--font-mono); }
+
+.text-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.035em;  /* Geist 800 benefits from tighter tracking     */
+  line-height: 0.93;          /* Geist ascenders are taller than Syne's      */
+}
+
+.text-headline {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1.05;
+}
+
+/* ─── Animation Utilities ────────────────────────────────────────────────── */
+.animate-fade-up {
+  animation: fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.blink {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+

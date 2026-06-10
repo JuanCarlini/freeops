@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FREEOPS — Opción C: Cobalto intenso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,700;0,800;0,900;1,800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      oklch(0.22 0.14 263);
+      --surface: oklch(0.27 0.12 263);
+      --border:  oklch(0.30 0.10 263);
+      --heading: oklch(0.96 0.005 263);
+      --text:    oklch(0.73 0.06 265);
+      --muted:   oklch(0.52 0.06 265);
+      --amber:   oklch(0.82 0.16 85);
+      --amber-dk:oklch(0.58 0.14 85);
+      --brand:   oklch(0.15 0.10 263);
+
+      --f: 'Libre Franklin', sans-serif;
+    }
+
+    html { background: var(--bg); color: var(--text); font-family: var(--f); -webkit-font-smoothing: antialiased; }
+
+    /* ---------- NAV ---------- */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 54px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 56px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg); z-index: 10;
+    }
+    .nav-logo {
+      font-weight: 900; font-size: 1rem;
+      letter-spacing: -0.01em; color: var(--heading); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 400;
+      color: var(--muted); text-decoration: none;
+    }
+    .nav-cta {
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--amber); text-decoration: none;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding: 140px 56px 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.68rem; font-weight: 700;
+      color: var(--amber); letter-spacing: 0.08em; text-transform: uppercase;
+      border: 1px solid var(--amber-dk);
+      padding: 4px 12px; margin-bottom: 32px;
+    }
+    .hero h1 {
+      font-weight: 900; font-size: clamp(4rem, 9vw, 8rem);
+      letter-spacing: -0.025em; line-height: 0.91;
+      color: var(--heading); max-width: 820px;
+      margin-bottom: 36px;
+    }
+    .hero p {
+      font-size: 0.95rem; font-weight: 300; line-height: 1.68;
+      color: var(--text); max-width: 52ch; margin-bottom: 40px;
+    }
+    .btn-solid {
+      display: inline-block; font-size: 0.82rem; font-weight: 800;
+      color: oklch(0.15 0.08 85); background: var(--amber);
+      padding: 11px 24px; text-decoration: none;
+    }
+    .btn-ghost {
+      display: inline-block; font-size: 0.82rem; font-weight: 500;
+      color: var(--text); border: 1px solid var(--border);
+      padding: 11px 24px; text-decoration: none; margin-left: 12px;
+    }
+
+    /* ---------- SERVICES ---------- */
+    .services {}
+    .services-head {
+      padding: 48px 56px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .services-head h2 {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 800; color: var(--heading);
+      letter-spacing: -0.02em;
+    }
+    .svc-row {
+      display: grid; grid-template-columns: 64px 1fr 220px;
+      padding: 28px 56px; border-bottom: 1px solid var(--border);
+      align-items: center; gap: 32px;
+      transition: background 0.15s;
+    }
+    .svc-row:hover { background: var(--surface); }
+    .svc-num {
+      font-size: 0.72rem; font-weight: 800;
+      color: var(--amber); letter-spacing: 0.06em;
+    }
+    .svc-name {
+      font-size: 1.25rem; font-weight: 800;
+      color: var(--heading); letter-spacing: -0.02em;
+    }
+    .svc-desc {
+      font-size: 0.75rem; font-weight: 400;
+      color: var(--muted); line-height: 1.5;
+    }
+
+    /* ---------- CTA ---------- */
+    .cta {
+      background: var(--surface); padding: 80px 56px;
+      border-top: 1px solid var(--border);
+    }
+    .cta-inner {
+      display: flex; align-items: flex-end;
+      justify-content: space-between; gap: 48px;
+    }
+    .cta h3 {
+      font-size: clamp(2.2rem, 4.5vw, 4rem);
+      font-weight: 900; color: var(--heading);
+      letter-spacing: -0.025em; line-height: 0.95;
+      max-width: 620px;
+    }
+    .cta h3 b { color: var(--amber); font-weight: 900; }
+    .cta-sub {
+      font-size: 0.82rem; font-weight: 300;
+      color: var(--muted); max-width: 36ch;
+      line-height: 1.6; margin-top: 20px;
+    }
+    .cta-right {}
+
+    /* ---------- FOOTER ---------- */
+    .footer { padding: 40px 56px; background: var(--brand); }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-logo {
+      font-weight: 900; font-size: 1.2rem;
+      color: var(--heading); letter-spacing: -0.01em;
+    }
+    .footer-right { display: flex; gap: 36px; }
+    .footer-link {
+      font-size: 0.75rem; font-weight: 300;
+      color: oklch(0.44 0.06 265); text-decoration: none;
+    }
+
+    /* ---------- LABEL ---------- */
+    .label {
+      position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+      background: var(--amber); color: oklch(0.15 0.08 85);
+      font-size: 0.62rem; font-weight: 800;
+      letter-spacing: 0.10em; text-transform: uppercase;
+      padding: 4px 14px; z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <div class="label">Opción C — Cobalto intenso</div>
+
+  <nav>
+    <a href="#" class="nav-logo">FREEOPS</a>
+    <ul class="nav-links">
+      <li><a href="#">Servicios</a></li>
+      <li><a href="#">Casos</a></li>
+      <li><a href="#">Nosotros</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Diagnóstico →</a>
+  </nav>
+
+  <section class="hero">
+    <span class="hero-badge">Estudio de automatización</span>
+    <h1>Liberar<br>operaciones.</h1>
+    <p>Construimos sistemas que procesan lo que tu equipo no debería hacer a mano. Con logs, errores controlados y documentación real. El sistema trabaja cuando el equipo humano no puede.</p>
+    <a href="#" class="btn-solid">Diagnóstico gratuito</a>
+    <a href="#" class="btn-ghost">Ver casos →</a>
+  </section>
+
+  <section class="services">
+    <div class="services-head">
+      <h2>Cinco verticales operativas</h2>
+    </div>
+    <div class="svc-row">
+      <span class="svc-num">01</span>
+      <span class="svc-name">Customer Ops</span>
+      <span class="svc-desc">Atención y tickets automatizados</span>
+    </div>
+    <div class="svc-row">
+      <span class="svc-num">02</span>
+      <span class="svc-name">Finanzas y Admin</span>
+      <span class="svc-desc">Facturación, pagos y reportes</span>
+    </div>
+    <div class="svc-row">
+      <span class="svc-num">03</span>
+      <span class="svc-name">Sales y CRM</span>
+      <span class="svc-desc">Pipeline automatizado</span>
+    </div>
+    <div class="svc-row">
+      <span class="svc-num">04</span>
+      <span class="svc-name">Agentes de IA</span>
+      <span class="svc-desc">LLM integrado en procesos reales</span>
+    </div>
+    <div class="svc-row">
+      <span class="svc-num">05</span>
+      <span class="svc-name">Integraciones</span>
+      <span class="svc-desc">Sistemas conectados</span>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-inner">
+      <div>
+        <h3>El diagnóstico identifica el <b>punto de mayor impacto.</b></h3>
+        <p class="cta-sub">30 minutos. Sin compromiso. Te decimos qué se automatiza, cuánto tiempo libera y qué cuesta.</p>
+      </div>
+      <div class="cta-right">
+        <a href="#" class="btn-solid">Pedilo gratis →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-logo">FREEOPS</span>
+      <div class="footer-right">
+        <a href="#" class="footer-link">hola@freeops.ai</a>
+        <a href="#" class="footer-link">Rosario, Argentina</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
