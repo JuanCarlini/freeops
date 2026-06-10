@@ -1,10 +1,12 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom'
+import { MotionConfig } from 'motion/react'
 import { RootLayout } from './views/layout/RootLayout'
 import { HomePage } from './views/pages/HomePage'
 import { ServiciosPage } from './views/pages/ServiciosPage'
 import { NosotrosPage } from './views/pages/NosotrosPage'
 import { CasosPage } from './views/pages/CasosPage'
 import { ContactoPage } from './views/pages/ContactoPage'
+import { PrivacidadPage } from './views/pages/PrivacidadPage'
 
 const router = createBrowserRouter([
   {
@@ -16,6 +18,7 @@ const router = createBrowserRouter([
       { path: 'nosotros', element: <NosotrosPage /> },
       { path: 'casos', element: <CasosPage /> },
       { path: 'contacto', element: <ContactoPage /> },
+      { path: 'privacidad', element: <PrivacidadPage /> },
       {
         path: '*',
         element: (
@@ -29,9 +32,9 @@ const router = createBrowserRouter([
             >
               Página no encontrada.
             </h1>
-            <a href="/" className="font-mono text-sm" style={{ color: 'var(--color-muted)' }}>
+            <Link to="/" className="font-mono text-sm" style={{ color: 'var(--color-muted)' }}>
               ← Volver al inicio
-            </a>
+            </Link>
           </div>
         ),
       },
@@ -40,5 +43,9 @@ const router = createBrowserRouter([
 ])
 
 export function App() {
-  return <RouterProvider router={router} />
+  return (
+    <MotionConfig reducedMotion="user">
+      <RouterProvider router={router} />
+    </MotionConfig>
+  )
 }

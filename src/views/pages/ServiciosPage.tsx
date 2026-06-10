@@ -6,7 +6,7 @@ import { Button } from '../components/primitives/Button'
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
-// ─── Single expandable service card ───────────────────────────────────────
+// ─── Single expandable service row ────────────────────────────────────────
 function ServiceItem({ service, index }: { service: Service; index: number }) {
   const [open, setOpen] = useState(false)
 
@@ -15,18 +15,21 @@ function ServiceItem({ service, index }: { service: Service; index: number }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.06, ease }}
-      className="border-t"
-      style={{ borderColor: 'var(--color-border)' }}
+      className="border-t transition-colors duration-200"
+      style={{ borderColor: open ? 'var(--color-accent)' : 'var(--color-border)' }}
     >
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-start md:items-center gap-6 py-7 text-left group"
+        className="w-full flex items-start md:items-center gap-5 md:gap-6 py-7 text-left group outline-none
+          focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2
+          focus-visible:ring-offset-[var(--color-bg)] rounded-[var(--radius-sm)]"
         aria-expanded={open}
       >
         {/* Number */}
         <span
-          className="font-mono text-xs shrink-0 w-14 mt-0.5"
-          style={{ color: 'var(--color-muted)' }}
+          className={`font-mono text-xs shrink-0 w-14 mt-2 md:mt-0.5 transition-colors duration-200 ${
+            open ? 'text-[var(--color-accent)]' : 'text-[var(--color-muted)]'
+          }`}
         >
           {service.secNumber}
         </span>
@@ -44,15 +47,17 @@ function ServiceItem({ service, index }: { service: Service; index: number }) {
           </p>
         </div>
 
-        {/* Toggle */}
+        {/* Toggle indicator */}
         <span
-          className="shrink-0 font-mono text-xl transition-all duration-200 leading-none"
-          style={{
-            color: open ? 'var(--color-brand)' : 'var(--color-muted)',
-            transform: open ? 'rotate(45deg)' : 'rotate(0deg)',
-          }}
+          aria-hidden="true"
+          className={`shrink-0 flex items-center justify-center w-8 h-8 mt-1 md:mt-0 border font-mono text-base leading-none
+            rounded-[var(--radius-sm)] transition-all duration-200 ${
+              open
+                ? 'bg-[var(--color-brand)] border-[var(--color-brand)] text-[var(--color-on-brand)]'
+                : 'bg-transparent border-[var(--color-border)] text-[var(--color-muted)] group-hover:border-[var(--color-brand)] group-hover:text-[var(--color-brand)]'
+            }`}
         >
-          +
+          {open ? '−' : '+'}
         </span>
       </button>
 
@@ -66,7 +71,9 @@ function ServiceItem({ service, index }: { service: Service; index: number }) {
             style={{ overflow: 'hidden' }}
           >
             <div
-              className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-8 pb-10 pl-0 md:pl-20"
+              className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-8 pb-10
+                ml-2 pl-5 border-l md:ml-0 md:pl-20 md:border-l-0"
+              style={{ borderColor: 'var(--color-border)' }}
             >
               {/* Description + capabilities */}
               <div>
@@ -91,7 +98,7 @@ function ServiceItem({ service, index }: { service: Service; index: number }) {
                       style={{ color: 'var(--color-text)' }}
                     >
                       <span style={{ color: 'var(--color-accent)' }} className="mt-0.5 shrink-0">
-                        →
+                        ›
                       </span>
                       {cap}
                     </li>
@@ -126,7 +133,7 @@ function ServiceItem({ service, index }: { service: Service; index: number }) {
 
                 <div className="mt-8">
                   <Button href="/contacto" variant="primary">
-                    Consultar →
+                    Pedir diagnóstico →
                   </Button>
                 </div>
               </div>
@@ -158,18 +165,18 @@ export function ServiciosPage() {
               style={{
                 fontSize: 'clamp(2.5rem, 5.5vw, 5.5rem)',
                 color: 'var(--color-heading)',
+                textWrap: 'balance',
+                maxWidth: '18ch',
               }}
             >
-              Cinco verticales
-              <br />
-              operativas.
+              Seis áreas donde eliminamos trabajo manual.
             </h1>
             <p
               className="text-lg max-w-xl leading-relaxed"
               style={{ color: 'var(--color-muted)' }}
             >
-              Cada servicio ataca un punto de fricción distinto.
-              Sin paquetes genéricos. Sin horas de consultoría perdidas.
+              Cada servicio resuelve un tipo de trabajo distinto: atención,
+              procesos internos, ventas, facturación, infraestructura y web.
             </p>
           </motion.div>
         </div>
@@ -211,7 +218,7 @@ export function ServiciosPage() {
             </p>
           </motion.div>
           <Button href="/contacto" variant="primary" className="shrink-0">
-            Diagnóstico gratuito →
+            Pedir diagnóstico →
           </Button>
         </div>
       </section>

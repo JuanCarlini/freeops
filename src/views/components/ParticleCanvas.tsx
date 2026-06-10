@@ -35,17 +35,23 @@ export function ParticleCanvas({
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
     let animId = 0
+    let running = false
     let w = 0
     let h = 0
+    let dpr = 1
     let particles: Particle[] = []
     const mouse = { x: -9999, y: -9999 }
 
     function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2)
       w = canvas!.offsetWidth
       h = canvas!.offsetHeight
-      canvas!.width = w
-      canvas!.height = h
+      canvas!.width = Math.round(w * dpr)
+      canvas!.height = Math.round(h * dpr)
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0)
 
       const count = Math.min(58, Math.floor((w * h) / 13_000))
       particles = Array.from({ length: count }, () => ({
@@ -57,29 +63,30 @@ export function ParticleCanvas({
       }))
     }
 
-    function frame() {
+    function draw(applyPhysics: boolean) {
       ctx!.clearRect(0, 0, w, h)
 
       for (const p of particles) {
-        const dx = mouse.x - p.x
-        const dy = mouse.y - p.y
-        const d2 = dx * dx + dy * dy
-        const d  = Math.sqrt(d2)
+        if (applyPhysics) {
+          const dx = mouse.x - p.x
+          const dy = mouse.y - p.y
+          const d  = Math.sqrt(dx * dx + dy * dy)
 
-        if (d < MOUSE_DIST && d > 1) {
-          p.vx += (dx / d) * MOUSE_FORCE
-          p.vy += (dy / d) * MOUSE_FORCE
+          if (d < MOUSE_DIST && d > 1) {
+            p.vx += (dx / d) * MOUSE_FORCE
+            p.vy += (dy / d) * MOUSE_FORCE
+          }
+
+          p.vx *= FRICTION
+          p.vy *= FRICTION
+          p.x  += p.vx
+          p.y  += p.vy
+
+          if (p.x <= 0)  { p.x = 0;  p.vx =  Math.abs(p.vx) }
+          if (p.x >= w)  { p.x = w;  p.vx = -Math.abs(p.vx) }
+          if (p.y <= 0)  { p.y = 0;  p.vy =  Math.abs(p.vy) }
+          if (p.y >= h)  { p.y = h;  p.vy = -Math.abs(p.vy) }
         }
-
-        p.vx *= FRICTION
-        p.vy *= FRICTION
-        p.x  += p.vx
-        p.y  += p.vy
-
-        if (p.x <= 0)  { p.x = 0;  p.vx =  Math.abs(p.vx) }
-        if (p.x >= w)  { p.x = w;  p.vx = -Math.abs(p.vx) }
-        if (p.y <= 0)  { p.y = 0;  p.vy =  Math.abs(p.vy) }
-        if (p.y >= h)  { p.y = h;  p.vy = -Math.abs(p.vy) }
 
         ctx!.beginPath()
         ctx!.arc(p.x, p.y, p.r, 0, Math.PI * 2)
@@ -106,11 +113,25 @@ export function ParticleCanvas({
           }
         }
       }
+    }
 
+    function frame() {
+      draw(true)
       animId = requestAnimationFrame(frame)
     }
 
-    // Listen on window so the canvas reacts even when UI overlays it
+    function start() {
+      if (running || reduceMotion) return
+      running = true
+      animId = requestAnimationFrame(frame)
+    }
+
+    function stop() {
+      if (!running) return
+      running = false
+      cancelAnimationFrame(animId)
+    }
+
     const onMove = (e: MouseEvent) => {
       const rect = canvas!.getBoundingClientRect()
       mouse.x = e.clientX - rect.left
@@ -121,19 +142,38 @@ export function ParticleCanvas({
       mouse.y = -9999
     }
 
-    const ro = new ResizeObserver(resize)
+    const ro = new ResizeObserver(() => {
+      resize()
+      if (reduceMotion) draw(false)
+    })
     ro.observe(canvas)
     resize()
-    frame()
 
-    window.addEventListener('mousemove', onMove, { passive: true })
-    window.addEventListener('mouseleave', onLeave)
+    if (reduceMotion) {
+      // Un frame estático: el grafo se ve, pero no consume ni distrae
+      draw(false)
+    } else {
+      // Pausa el loop cuando el canvas sale del viewport (batería en mobile)
+      const io = new IntersectionObserver(
+        ([entry]) => (entry.isIntersecting ? start() : stop()),
+        { threshold: 0 }
+      )
+      io.observe(canvas)
+
+      window.addEventListener('mousemove', onMove, { passive: true })
+      window.addEventListener('mouseleave', onLeave)
+
+      return () => {
+        stop()
+        io.disconnect()
+        ro.disconnect()
+        window.removeEventListener('mousemove', onMove)
+        window.removeEventListener('mouseleave', onLeave)
+      }
+    }
 
     return () => {
-      cancelAnimationFrame(animId)
       ro.disconnect()
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseleave', onLeave)
     }
   }, [particleColor, particleOpacity, connectionOpacity])
 

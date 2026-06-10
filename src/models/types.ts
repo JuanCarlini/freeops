@@ -6,18 +6,17 @@ export interface Service {
   tagline: string
   description: string
   capabilities: string[]
-  asciiIcon: string
   techTags: string[]
 }
 
 export interface CaseStudy {
   id: string
-  industry: string
-  problem: string
-  solution?: string
-  result?: string
+  /** Nombre del cliente; null cuando el caso se publica sin cliente */
+  client: string | null
+  title: string
+  summary: string
   tags: string[]
-  status: 'published' | 'coming-soon'
+  status: 'En producción' | 'Entregado'
 }
 
 export interface NavItem {

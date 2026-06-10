@@ -119,7 +119,7 @@ function FounderSection() {
                 Rosario, Argentina. Developer de automatización e IA con foco en integración
                 de sistemas y agentes conversacionales.
               </>,
-              'Antes de FREEOPS, cinco años construyendo sistemas de automatización bajo la marca personal Carlini — desde integraciones simples hasta arquitecturas completas con Power Automate, n8n, Claude API y WhatsApp Business.',
+              'Antes de FREEOPS, cinco años construyendo sistemas de automatización bajo la marca personal Carlini: desde integraciones simples hasta arquitecturas completas con Power Automate, n8n, Claude API y WhatsApp Business.',
               'FREEOPS es la evolución de esa práctica: de desarrollador independiente a estudio con servicios sistematizados, metodología definida y entrega estandarizada.',
             ].map((text, i) => (
               <motion.p
@@ -223,7 +223,7 @@ function ValuesSection() {
 
         <motion.div className="mt-16" {...fadeUp(0.2)}>
           <Button href="/contacto" variant="outline">
-            Trabajemos juntos →
+            Pedir diagnóstico →
           </Button>
         </motion.div>
       </div>

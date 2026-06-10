@@ -1,5 +1,11 @@
 import { motion } from 'motion/react'
 import { ContactForm } from '../components/ContactForm'
+import {
+  CONTACT_EMAIL,
+  LINKEDIN_URL,
+  LINKEDIN_LABEL,
+  LOCATION,
+} from '@/models/contact.data'
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
@@ -11,9 +17,11 @@ const STEPS = [
 ]
 
 const CONTACT_INFO = [
-  { label: 'EMAIL', value: 'hola@freeops.ai', href: 'mailto:hola@freeops.ai' },
-  { label: 'LINKEDIN', value: 'linkedin.com/company/freeops →', href: 'https://linkedin.com/company/freeops' },
+  { label: 'EMAIL', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
+  { label: 'LINKEDIN', value: `${LINKEDIN_LABEL} →`, href: LINKEDIN_URL },
 ]
+
+const LABEL_COLOR = 'oklch(0.45 0.05 87)'
 
 export function ContactoPage() {
   return (
@@ -32,11 +40,13 @@ export function ContactoPage() {
             <h1
               className="text-headline mb-5"
               style={{
-                fontSize: 'clamp(2.5rem, 5.5vw, 5.5rem)',
+                fontSize: 'clamp(2.2rem, 5vw, 4.5rem)',
                 color: 'var(--color-heading)',
+                textWrap: 'balance',
+                maxWidth: '16ch',
               }}
             >
-              Diagnóstico gratuito<br />de automatización.
+              Diagnóstico gratuito de automatización.
             </h1>
             <p
               className="text-lg max-w-xl leading-relaxed"
@@ -120,7 +130,7 @@ export function ContactoPage() {
                     <div key={item.label}>
                       <p
                         className="font-mono text-xs mb-1"
-                        style={{ color: 'oklch(0.62 0.04 87)' }}
+                        style={{ color: LABEL_COLOR }}
                       >
                         {item.label}
                       </p>
@@ -128,10 +138,10 @@ export function ContactoPage() {
                         href={item.href}
                         target={item.href.startsWith('http') ? '_blank' : undefined}
                         rel="noopener noreferrer"
-                        className="font-mono text-sm transition-colors duration-150"
-                        style={{ color: 'var(--color-text)' }}
-                        onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-brand)')}
-                        onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-text)')}
+                        className="font-mono text-sm transition-colors duration-150
+                          text-[var(--color-text)] hover:text-[var(--color-brand)] outline-none
+                          focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
+                          focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]"
                       >
                         {item.value}
                       </a>
@@ -141,7 +151,7 @@ export function ContactoPage() {
                   <div>
                     <p
                       className="font-mono text-xs mb-1"
-                      style={{ color: 'oklch(0.62 0.04 87)' }}
+                      style={{ color: LABEL_COLOR }}
                     >
                       UBICACIÓN
                     </p>
@@ -149,14 +159,14 @@ export function ContactoPage() {
                       className="font-mono text-sm"
                       style={{ color: 'var(--color-muted)' }}
                     >
-                      Rosario, Santa Fe, Argentina
+                      {LOCATION}
                     </span>
                   </div>
 
                   <div>
                     <p
                       className="font-mono text-xs mb-1"
-                      style={{ color: 'oklch(0.62 0.04 87)' }}
+                      style={{ color: LABEL_COLOR }}
                     >
                       RESPUESTA
                     </p>
