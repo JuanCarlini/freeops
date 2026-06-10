@@ -1,11 +1,4 @@
 import type { Service } from './types'
-import {
-  ASCII_CUSTOMER_OPS,
-  ASCII_INTERNAL_OPS,
-  ASCII_SALES_OPS,
-  ASCII_FINANCE_OPS,
-  ASCII_INFRA_OPS,
-} from './ascii.data'
 
 export const SERVICES: Service[] = [
   {
@@ -24,7 +17,6 @@ export const SERVICES: Service[] = [
       'Escalado inteligente a humano',
       'Logs y métricas de interacción',
     ],
-    asciiIcon: ASCII_CUSTOMER_OPS,
     techTags: ['n8n', 'Claude API', 'WhatsApp Business', 'Chatwoot', 'Supabase'],
   },
   {
@@ -43,7 +35,6 @@ export const SERVICES: Service[] = [
       'Notificaciones y alertas operativas',
       'Auditoría y trazabilidad',
     ],
-    asciiIcon: ASCII_INTERNAL_OPS,
     techTags: ['Power Automate', 'Claude API', 'Microsoft Dataverse', 'SharePoint', 'n8n'],
   },
   {
@@ -51,7 +42,7 @@ export const SERVICES: Service[] = [
     slug: 'sales-ops',
     secNumber: 'SVC.03',
     name: 'Sales Ops',
-    tagline: 'El pipeline no se mueve solo. Nosotros sí.',
+    tagline: 'Follow-up, scoring y CRM al día sin carga manual.',
     description:
       'Automatizaciones comerciales: follow-up, scoring de leads, actualización de CRM, reportes de pipeline.',
     capabilities: [
@@ -62,7 +53,6 @@ export const SERVICES: Service[] = [
       'Reportes de pipeline semanales automáticos',
       'Integración con formularios y landing pages',
     ],
-    asciiIcon: ASCII_SALES_OPS,
     techTags: ['n8n', 'HubSpot', 'Airtable', 'Claude API', 'WhatsApp', 'Gmail'],
   },
   {
@@ -81,7 +71,6 @@ export const SERVICES: Service[] = [
       'Integración con sistemas de facturación',
       'Alertas de vencimientos',
     ],
-    asciiIcon: ASCII_FINANCE_OPS,
     techTags: ['n8n', 'Claude API', 'Google Sheets', 'Power Automate', 'AFIP'],
   },
   {
@@ -100,7 +89,24 @@ export const SERVICES: Service[] = [
       'Migración desde n8n cloud',
       'Documentación de infraestructura',
     ],
-    asciiIcon: ASCII_INFRA_OPS,
     techTags: ['n8n', 'Docker', 'Hostinger VPS', 'Nginx', 'Cloudflare'],
+  },
+  {
+    id: 'web-ops',
+    slug: 'web-ops',
+    secNumber: 'SVC.06',
+    name: 'Web Ops',
+    tagline: 'Landing pages que se conectan con tu operación.',
+    description:
+      'Diseño y desarrollo de landing pages y sitios institucionales con formularios conectados a tus flujos: cada consulta entra directo a tu WhatsApp, CRM o planilla.',
+    capabilities: [
+      'Diseño y desarrollo de landing pages',
+      'Formularios conectados a WhatsApp, CRM o email',
+      'Integración con flujos de automatización existentes',
+      'SEO técnico de base y performance',
+      'Hosting, dominio y SSL',
+      'Cambios y mantenimiento post-entrega',
+    ],
+    techTags: ['React', 'TypeScript', 'Tailwind', 'Vercel', 'n8n'],
   },
 ]

@@ -112,8 +112,8 @@ function HeroSection() {
   )
 }
 
-// ─── Letras de SERVICES ────────────────────────────────────────────────────
-// S(keep) E R V(keep) I C(keep) E S  → al colapsar: S V C quedan juntas
+// ─── Letras de SERVICIOS ───────────────────────────────────────────────────
+// S(keep) E R V(keep) I C(keep) I O S  → al colapsar: S V C quedan juntas
 const WORD_LETTERS = [
   { id: 's1', char: 'S', keep: true  },
   { id: 'e1', char: 'E', keep: false },
@@ -121,7 +121,8 @@ const WORD_LETTERS = [
   { id: 'v1', char: 'V', keep: true  },
   { id: 'i1', char: 'I', keep: false },
   { id: 'c1', char: 'C', keep: true  },
-  { id: 'e2', char: 'E', keep: false },
+  { id: 'i2', char: 'I', keep: false },
+  { id: 'o1', char: 'O', keep: false },
   { id: 's2', char: 'S', keep: false },
 ]
 
@@ -148,20 +149,19 @@ function ServicesSection() {
     return smooth.on('change', (v) => setLettersCollapsed(v > 0.06))
   }, [smooth])
 
-  // Intro completo: se mantiene hasta 0.30, luego fade 0.30 → 0.46
-  // SVC es visible todo ese rango (0.06 → 0.30) = 24% de 280vh ≈ 67vh de recorrido
-  const introOpacity = useTransform(smooth, [0, 0.30, 0.46], [1, 1, 0])
-  const introScale   = useTransform(smooth, [0, 0.46], [1, 0.78])
+  // Intro: hold corto, el contenido real (la lista) se lleva el grueso del scroll
+  const introOpacity = useTransform(smooth, [0, 0.26, 0.40], [1, 1, 0])
+  const introScale   = useTransform(smooth, [0, 0.40], [1, 0.78])
 
-  // Lista de servicios: aparece después del fade del intro
-  const listOpacity = useTransform(smooth, [0.42, 0.66], [0, 1])
-  const listY       = useTransform(smooth, [0.42, 0.68], [48, 0])
+  // Lista de servicios: aparece antes y sostiene hasta el final del pin
+  const listOpacity = useTransform(smooth, [0.32, 0.50], [0, 1])
+  const listY       = useTransform(smooth, [0.32, 0.52], [48, 0])
 
   const letterStyle: React.CSSProperties = {
     display: 'inline-block',
     fontFamily: 'var(--font-display)',
     fontWeight: 800,
-    fontSize: 'clamp(7rem, 22vw, 22rem)',
+    fontSize: 'clamp(3.8rem, 16vw, 16rem)',
     color: 'oklch(0.35 0.12 263)',
     letterSpacing: '-0.04em',
     lineHeight: 1,
@@ -171,7 +171,7 @@ function ServicesSection() {
   const visibleLetters = WORD_LETTERS.filter(({ keep }) => !lettersCollapsed || keep)
 
   return (
-    <div ref={containerRef} style={{ height: '280vh' }}>
+    <div ref={containerRef} style={{ height: '210vh' }}>
       <div
         style={{
           position: 'sticky',
@@ -225,8 +225,8 @@ function ServicesSection() {
         >
           <div className="max-w-7xl mx-auto px-6 lg:px-14 w-full">
             <p
-              className="font-mono text-xs uppercase tracking-widest mb-10"
-              style={{ color: 'oklch(0.48 0.06 255)' }}
+              className="font-mono text-xs uppercase tracking-widest mb-8 md:mb-10"
+              style={{ color: 'oklch(0.62 0.07 255)' }}
             >
               Servicios
             </p>
@@ -240,36 +240,37 @@ function ServicesSection() {
                 >
                   <Link
                     to="/servicios"
-                    className="group flex items-center justify-between py-4 border-b transition-all duration-200"
-                    style={{ borderColor: 'oklch(0.28 0.09 263)' }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'oklch(0.40 0.12 255)'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'oklch(0.28 0.09 263)'
-                    }}
+                    className="group flex items-center gap-4 justify-between py-3 md:py-4 border-b outline-none
+                      border-[oklch(0.28_0.09_263)] hover:border-[oklch(0.45_0.12_255)]
+                      transition-colors duration-200
+                      focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
+                      focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-brand)]"
                   >
                     <span
-                      className="font-display font-bold transition-colors duration-200"
+                      className="font-mono text-xs shrink-0 w-14 hidden sm:block"
+                      style={{ color: 'oklch(0.58 0.07 255)' }}
+                    >
+                      {service.secNumber}
+                    </span>
+                    <span
+                      className="flex-1 font-display font-bold transition-colors duration-200
+                        text-[oklch(0.88_0.010_87)] group-hover:text-[oklch(0.94_0.012_87)]"
                       style={{
                         fontSize: 'clamp(1.4rem, 3.2vw, 3rem)',
-                        color: 'oklch(0.88 0.010 87)',
                         letterSpacing: '-0.025em',
                         lineHeight: 1.1,
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = 'oklch(0.940 0.012 87)'
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = 'oklch(0.88 0.010 87)'
                       }}
                     >
                       {service.name}
                     </span>
                     <span
-                      className="font-mono text-sm translate-x-0 group-hover:translate-x-2 transition-transform duration-200 hidden sm:block"
-                      style={{ color: 'oklch(0.48 0.06 255)' }}
+                      className="flex items-center shrink-0 font-mono text-sm transition-colors duration-200
+                        text-[oklch(0.62_0.07_255)] group-hover:text-[oklch(0.94_0.012_87)]"
                     >
+                      <span
+                        aria-hidden="true"
+                        className="block h-px w-0 group-hover:w-5 bg-current transition-all duration-300"
+                      />
                       →
                     </span>
                   </Link>
@@ -284,14 +285,10 @@ function ServicesSection() {
             <div className="mt-10">
               <Link
                 to="/servicios"
-                className="font-mono text-sm transition-colors duration-150"
-                style={{ color: 'oklch(0.48 0.06 255)' }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = 'oklch(0.940 0.012 87)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = 'oklch(0.48 0.06 255)'
-                }}
+                className="font-mono text-sm transition-colors duration-150
+                  text-[oklch(0.62_0.07_255)] hover:text-[oklch(0.94_0.012_87)] outline-none
+                  focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
+                  focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-brand)]"
               >
                 Ver todos los servicios →
               </Link>
