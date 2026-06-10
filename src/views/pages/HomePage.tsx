@@ -8,7 +8,9 @@ import {
   useSpring,
 } from 'motion/react'
 import { SERVICES } from '@/models/services.data'
+import { CASES } from '@/models/casos.data'
 import { ParticleCanvas } from '../components/ParticleCanvas'
+import { ClientMarquee } from '../components/ClientMarquee'
 import { Button } from '../components/primitives/Button'
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number]
@@ -347,41 +349,14 @@ function ManifestoSection() {
   )
 }
 
-// ─── Casos — sección en home (reemplaza la pestaña de nav) ────────────────
-const CASOS_DATA = [
-  {
-    id: 'cs-01',
-    industry: 'Comercio y distribución',
-    teaser: 'Automatización de seguimiento de pedidos y notificaciones a clientes.',
-    tags: ['n8n', 'WhatsApp API', 'CRM'],
-  },
-  {
-    id: 'cs-02',
-    industry: 'Servicios profesionales',
-    teaser: 'Pipeline de onboarding de clientes que reduce el tiempo manual en un 80%.',
-    tags: ['Power Automate', 'Dataverse', 'Outlook'],
-  },
-  {
-    id: 'cs-03',
-    industry: 'Logística',
-    teaser: 'Sistema de procesamiento de remitos y carga automática en ERP.',
-    tags: ['Claude API', 'Python', 'SAP'],
-  },
-  {
-    id: 'cs-04',
-    industry: 'Finanzas y contabilidad',
-    teaser: 'Extracción y clasificación automática de facturas con IA.',
-    tags: ['Claude API', 'n8n', 'Google Sheets'],
-  },
-]
-
+// ─── Casos — sección en home con casos reales ─────────────────────────────
 function CasosSection() {
   return (
     <section style={{ backgroundColor: 'var(--color-surface)' }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-14 py-24">
 
         <motion.div
-          className="flex items-end justify-between mb-16 pb-6 border-b"
+          className="flex items-end justify-between mb-12 pb-6 border-b"
           style={{ borderColor: 'var(--color-border)' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -397,37 +372,46 @@ function CasosSection() {
           >
             Casos.
           </h2>
-          <span
-            className="font-mono text-xs pb-1"
-            style={{ color: 'var(--color-muted)' }}
+          <Link
+            to="/casos"
+            className="font-mono text-xs pb-1 transition-colors duration-150
+              text-[var(--color-muted)] hover:text-[var(--color-brand)] outline-none
+              focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
+              focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
           >
-            En construcción
-          </span>
+            Ver todos →
+          </Link>
         </motion.div>
 
         <div>
-          {CASOS_DATA.map((c, i) => (
+          {CASES.map((c, i) => (
             <motion.div
               key={c.id}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: i * 0.07, ease }}
-              className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 py-8 border-b items-start"
-              style={{ borderColor: 'var(--color-border)', filter: 'blur(0)' }}
+              className="grid grid-cols-1 md:grid-cols-[160px_1fr_auto] gap-3 md:gap-8 py-8 border-b items-start"
+              style={{ borderColor: 'var(--color-border)' }}
             >
-              <div style={{ filter: 'blur(1.5px)', opacity: 0.6 }}>
+              <p
+                className="font-mono text-xs uppercase tracking-widest md:mt-1.5"
+                style={{ color: 'var(--color-accent)' }}
+              >
+                {c.client ?? 'Interno'}
+              </p>
+              <div>
                 <p
                   className="font-display font-bold text-xl mb-2"
                   style={{ color: 'var(--color-heading)', letterSpacing: '-0.02em' }}
                 >
-                  {c.industry}
+                  {c.title}
                 </p>
                 <p
                   className="text-sm leading-relaxed mb-4"
                   style={{ color: 'var(--color-muted)', maxWidth: '60ch' }}
                 >
-                  {c.teaser}
+                  {c.summary}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {c.tags.map((tag) => (
@@ -447,31 +431,21 @@ function CasosSection() {
                 </div>
               </div>
               <span
-                className="font-mono text-xs px-3 py-1.5 shrink-0 self-start mt-1"
-                style={{
-                  backgroundColor: 'var(--color-surface-2)',
-                  color: 'var(--color-muted)',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: 'var(--radius-sm)',
-                }}
+                className="font-mono text-xs shrink-0 self-start md:mt-1.5 inline-flex items-center gap-2"
+                style={{ color: 'var(--color-muted)' }}
               >
-                PRÓXIMAMENTE
+                {c.status === 'En producción' && (
+                  <span
+                    aria-hidden="true"
+                    className="inline-block w-1.5 h-1.5 rounded-full"
+                    style={{ backgroundColor: 'var(--color-accent)' }}
+                  />
+                )}
+                {c.status}
               </span>
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          className="mt-12"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <Button href="/contacto" variant="outline">
-            Pedir diagnóstico →
-          </Button>
-        </motion.div>
       </div>
     </section>
   )
@@ -517,6 +491,7 @@ export function HomePage() {
     <>
       <HeroSection />
       <ServicesSection />
+      <ClientMarquee />
       <ManifestoSection />
       <CasosSection />
       <CTASection />

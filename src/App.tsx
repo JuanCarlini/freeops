@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom'
+import { MotionConfig } from 'motion/react'
 import { RootLayout } from './views/layout/RootLayout'
 import { HomePage } from './views/pages/HomePage'
 import { ServiciosPage } from './views/pages/ServiciosPage'
@@ -42,5 +43,9 @@ const router = createBrowserRouter([
 ])
 
 export function App() {
-  return <RouterProvider router={router} />
+  return (
+    <MotionConfig reducedMotion="user">
+      <RouterProvider router={router} />
+    </MotionConfig>
+  )
 }

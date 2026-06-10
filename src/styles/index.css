@@ -50,6 +50,11 @@
     0%, 100% { opacity: 1; }
     50%       { opacity: 0; }
   }
+
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
 }
 
 /* ─── Base Reset ──────────────────────────────────────────────────────────── */
@@ -79,18 +84,10 @@
   }
 }
 
-/* ─── Custom Cursor ──────────────────────────────────────────────────────── */
-.cursor-active,
-.cursor-active a,
-.cursor-active button,
-.cursor-active [role="button"],
-.cursor-active label {
-  cursor: none;
-}
-.cursor-active input,
-.cursor-active textarea,
-.cursor-active select {
-  cursor: text;
+/* ─── Marquee ────────────────────────────────────────────────────────────── */
+.marquee-track {
+  animation: marquee-scroll 36s linear infinite;
+  will-change: transform;
 }
 
 /* ─── Selection ──────────────────────────────────────────────────────────── */

@@ -1,34 +1,8 @@
 import { motion } from 'motion/react'
+import { CASES } from '@/models/casos.data'
 import { Button } from '../components/primitives/Button'
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number]
-
-const COMING_SOON = [
-  {
-    id: 'cs-01',
-    industry: 'Comercio y distribución',
-    teaser: 'Automatización de seguimiento de pedidos y notificaciones a clientes.',
-    tags: ['n8n', 'WhatsApp API', 'CRM'],
-  },
-  {
-    id: 'cs-02',
-    industry: 'Servicios profesionales',
-    teaser: 'Pipeline de onboarding de clientes que reduce el tiempo manual en un 80%.',
-    tags: ['Power Automate', 'Dataverse', 'Outlook'],
-  },
-  {
-    id: 'cs-03',
-    industry: 'Logística',
-    teaser: 'Sistema de procesamiento de remitos y carga automática en ERP.',
-    tags: ['Claude API', 'Python', 'SAP'],
-  },
-  {
-    id: 'cs-04',
-    industry: 'Finanzas y contabilidad',
-    teaser: 'Extracción y clasificación automática de facturas con IA.',
-    tags: ['Claude API', 'n8n', 'Google Sheets'],
-  },
-]
 
 export function CasosPage() {
   return (
@@ -49,6 +23,7 @@ export function CasosPage() {
               style={{
                 fontSize: 'clamp(2.5rem, 5.5vw, 5.5rem)',
                 color: 'var(--color-heading)',
+                textWrap: 'balance',
               }}
             >
               Problemas reales.
@@ -70,70 +45,72 @@ export function CasosPage() {
       <section className="py-16" style={{ backgroundColor: 'var(--color-bg)' }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {COMING_SOON.map((c, i) => (
-              <motion.div
+            {CASES.map((c, i) => (
+              <motion.article
                 key={c.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: i * 0.08, ease }}
-                className="relative overflow-hidden p-8 border"
+                className="flex flex-col p-8 border"
                 style={{
                   borderColor: 'var(--color-border)',
                   backgroundColor: 'var(--color-surface)',
                   borderRadius: 'var(--radius-md)',
                 }}
               >
-                {/* Blur overlay (coming soon) */}
-                <div
-                  className="absolute inset-0 flex items-end pb-6 px-8"
-                  style={{ backdropFilter: 'blur(2px)', zIndex: 2 }}
-                >
-                  <span
-                    className="font-mono text-xs px-3 py-1.5"
-                    style={{
-                      backgroundColor: 'var(--color-surface-2)',
-                      color: 'var(--color-muted)',
-                      border: '1px solid var(--color-border)',
-                      borderRadius: 'var(--radius-sm)',
-                    }}
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <p
+                    className="font-mono text-xs uppercase tracking-widest"
+                    style={{ color: 'var(--color-accent)' }}
                   >
-                    PRÓXIMAMENTE
+                    {c.client ?? 'Interno'}
+                  </p>
+                  <span
+                    className="font-mono text-xs shrink-0 inline-flex items-center gap-2"
+                    style={{ color: 'var(--color-muted)' }}
+                  >
+                    {c.status === 'En producción' && (
+                      <span
+                        aria-hidden="true"
+                        className="inline-block w-1.5 h-1.5 rounded-full"
+                        style={{ backgroundColor: 'var(--color-accent)' }}
+                      />
+                    )}
+                    {c.status}
                   </span>
                 </div>
 
-                {/* Content */}
-                <div className="relative" style={{ zIndex: 1 }}>
-                  <p
-                    className="font-mono text-xs uppercase tracking-widest mb-4"
-                    style={{ color: 'var(--color-accent)' }}
-                  >
-                    {c.industry}
-                  </p>
-                  <p
-                    className="text-base leading-relaxed mb-6"
-                    style={{ color: 'var(--color-text)' }}
-                  >
-                    {c.teaser}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {c.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="font-mono text-xs px-2.5 py-1"
-                        style={{
-                          backgroundColor: 'var(--color-surface-2)',
-                          color: 'var(--color-muted)',
-                          border: '1px solid var(--color-border)',
-                          borderRadius: 'var(--radius-sm)',
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                <h2
+                  className="font-display font-bold text-2xl mb-3"
+                  style={{ color: 'var(--color-heading)', letterSpacing: '-0.02em' }}
+                >
+                  {c.title}
+                </h2>
+                <p
+                  className="text-base leading-relaxed mb-6 flex-1"
+                  style={{ color: 'var(--color-text)' }}
+                >
+                  {c.summary}
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {c.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="font-mono text-xs px-2.5 py-1"
+                      style={{
+                        backgroundColor: 'var(--color-surface-2)',
+                        color: 'var(--color-muted)',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: 'var(--radius-sm)',
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
         </div>
@@ -156,11 +133,12 @@ export function CasosPage() {
               className="font-display font-bold text-2xl mb-4"
               style={{ color: 'var(--color-heading)' }}
             >
-              Sé el primer caso publicado.
+              ¿Tenés un proceso parecido?
             </h2>
             <p className="mb-8 text-sm leading-relaxed" style={{ color: 'var(--color-muted)' }}>
               Trabajamos con empresas de Rosario y la región.
-              Si tenés un proceso que se hace a mano, podemos automatizarlo.
+              Si hay un proceso que se hace a mano, lo analizamos y te decimos
+              qué se puede automatizar.
             </p>
             <Button href="/contacto" variant="primary">
               Pedir diagnóstico →
