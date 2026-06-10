@@ -14,7 +14,7 @@ export function RootLayout() {
 
   return (
     <div
-      className="min-h-screen flex flex-col"
+      className="min-h-[100dvh] flex flex-col"
       style={{ backgroundColor: 'var(--color-bg)' }}
     >
       <CustomCursor />

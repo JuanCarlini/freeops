@@ -15,7 +15,7 @@ export function DiagnosticoBar() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-3 flex items-center justify-between gap-4">
         <p className="font-sans text-sm hidden sm:block" style={{ color: 'oklch(0.72 0.04 265)' }}>
-          Diagnóstico gratuito de automatización — sin compromiso.
+          Diagnóstico gratuito de automatización, sin compromiso.
         </p>
         <Link
           to="/contacto"

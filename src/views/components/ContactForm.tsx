@@ -2,34 +2,24 @@ import { useContactForm } from '@/controllers/useContactForm'
 import { Button } from './primitives/Button'
 
 const AREAS = [
-  'Customer Ops — Atención automatizada',
-  'Internal Ops — Procesos internos',
-  'Sales Ops — Automatización comercial',
-  'Finance Ops — Facturas y conciliación',
-  'Infra Ops — Infraestructura',
-  'No sé todavía — quiero el diagnóstico',
+  'Atención al cliente (Customer Ops)',
+  'Procesos internos (Internal Ops)',
+  'Ventas (Sales Ops)',
+  'Facturas y conciliación (Finance Ops)',
+  'Infraestructura (Infra Ops)',
+  'Web y landing pages (Web Ops)',
+  'No sé todavía, quiero el diagnóstico',
 ]
-
-const inputBase: React.CSSProperties = {
-  width: '100%',
-  padding: '12px 16px',
-  border: '1.5px solid var(--color-border)',
-  borderRadius: 'var(--radius-md)',
-  backgroundColor: 'var(--color-surface)',
-  color: 'var(--color-text)',
-  fontFamily: 'var(--font-sans)',
-  fontSize: '0.9375rem',
-  outline: 'none',
-  transition: 'border-color 0.15s ease',
-}
 
 function Field({
   id,
   label,
+  error,
   children,
 }: {
   id: string
   label: string
+  error?: string
   children: React.ReactNode
 }) {
   return (
@@ -42,21 +32,27 @@ function Field({
         {label}
       </label>
       {children}
+      {error && (
+        <p
+          id={`${id}-error`}
+          className="mt-2 text-sm"
+          style={{ color: 'var(--color-error)' }}
+        >
+          {error}
+        </p>
+      )}
     </div>
   )
 }
 
 export function ContactForm() {
-  const { formData, status, handleChange, handleSubmit } = useContactForm()
-
-  const focusStyle = {
-    borderColor: 'var(--color-brand)',
-  }
+  const { formData, errors, status, handleChange, handleSubmit, reset, contactEmail } =
+    useContactForm()
 
   if (status === 'success') {
     return (
       <div
-        className="p-10 text-center border"
+        className="p-10 border"
         style={{
           borderColor: 'var(--color-border)',
           backgroundColor: 'var(--color-surface)',
@@ -67,62 +63,75 @@ export function ContactForm() {
           className="font-mono text-xs uppercase tracking-widest mb-4"
           style={{ color: 'var(--color-accent)' }}
         >
-          Mensaje recibido
+          Mensaje listo
         </div>
-        <p className="text-xl font-display font-bold mb-2" style={{ color: 'var(--color-heading)' }}>
-          Lo recibimos.
+        <p
+          className="text-xl font-display font-bold mb-2"
+          style={{ color: 'var(--color-heading)' }}
+        >
+          Se abrió tu correo con el mensaje cargado.
         </p>
-        <p className="text-sm" style={{ color: 'var(--color-muted)' }}>
-          Te respondemos en menos de 24 horas hábiles.
+        <p className="text-sm leading-relaxed mb-2" style={{ color: 'var(--color-muted)' }}>
+          Envialo y te respondemos en menos de 24 horas hábiles.
         </p>
+        <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--color-muted)' }}>
+          ¿No se abrió? Escribinos directo a{' '}
+          <a
+            href={`mailto:${contactEmail}`}
+            className="font-medium underline underline-offset-2"
+            style={{ color: 'var(--color-brand)' }}
+          >
+            {contactEmail}
+          </a>
+        </p>
+        <Button onClick={reset} variant="outline">
+          Cargar otro mensaje
+        </Button>
       </div>
     )
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-      <Field id="nombre" label="Nombre">
+      <Field id="nombre" label="Nombre" error={errors.nombre}>
         <input
           id="nombre"
           name="nombre"
           type="text"
-          required
           autoComplete="name"
           value={formData.nombre}
           onChange={handleChange}
-          placeholder="Juan García"
-          style={inputBase}
-          onFocus={(e) => Object.assign(e.currentTarget.style, focusStyle)}
-          onBlur={(e) => (e.currentTarget.style.borderColor = 'var(--color-border)')}
+          placeholder="Nombre y apellido"
+          className="form-input"
+          aria-invalid={errors.nombre ? true : undefined}
+          aria-describedby={errors.nombre ? 'nombre-error' : undefined}
         />
       </Field>
 
-      <Field id="email" label="Email">
+      <Field id="email" label="Email" error={errors.email}>
         <input
           id="email"
           name="email"
           type="email"
-          required
           autoComplete="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder="juan@empresa.com"
-          style={inputBase}
-          onFocus={(e) => Object.assign(e.currentTarget.style, focusStyle)}
-          onBlur={(e) => (e.currentTarget.style.borderColor = 'var(--color-border)')}
+          placeholder="nombre@empresa.com"
+          className="form-input"
+          aria-invalid={errors.email ? true : undefined}
+          aria-describedby={errors.email ? 'email-error' : undefined}
         />
       </Field>
 
-      <Field id="area" label="Área de interés">
+      <Field id="area" label="Área de interés" error={errors.area}>
         <select
           id="area"
           name="area"
-          required
           value={formData.area}
           onChange={handleChange}
-          style={inputBase}
-          onFocus={(e) => Object.assign(e.currentTarget.style, focusStyle)}
-          onBlur={(e) => (e.currentTarget.style.borderColor = 'var(--color-border)')}
+          className="form-input"
+          aria-invalid={errors.area ? true : undefined}
+          aria-describedby={errors.area ? 'area-error' : undefined}
         >
           <option value="" disabled>
             Seleccioná una opción
@@ -135,34 +144,27 @@ export function ContactForm() {
         </select>
       </Field>
 
-      <Field id="descripcion" label="Descripción del problema">
+      <Field id="descripcion" label="Descripción del problema" error={errors.descripcion}>
         <textarea
           id="descripcion"
           name="descripcion"
-          required
           rows={5}
           value={formData.descripcion}
           onChange={handleChange}
-          placeholder="Describí el proceso que querés automatizar o el problema que tenés..."
-          style={{ ...inputBase, resize: 'none' }}
-          onFocus={(e) => Object.assign(e.currentTarget.style, focusStyle)}
-          onBlur={(e) => (e.currentTarget.style.borderColor = 'var(--color-border)')}
+          placeholder="Qué proceso querés automatizar y cómo se hace hoy"
+          className="form-input resize-none"
+          aria-invalid={errors.descripcion ? true : undefined}
+          aria-describedby={errors.descripcion ? 'descripcion-error' : undefined}
         />
       </Field>
 
-      {status === 'error' && (
-        <p className="text-sm" style={{ color: 'oklch(0.50 0.18 20)' }}>
-          Error al enviar. Intentá de nuevo o escribinos a hola@freeops.ai
-        </p>
-      )}
+      <p className="text-xs leading-relaxed" style={{ color: 'var(--color-muted)' }}>
+        Al enviar se abre tu correo con el mensaje ya cargado. No guardamos tus datos en ningún
+        servidor.
+      </p>
 
-      <Button
-        type="submit"
-        variant="primary"
-        disabled={status === 'sending'}
-        className="w-full justify-center"
-      >
-        {status === 'sending' ? 'Enviando...' : 'Solicitar diagnóstico →'}
+      <Button type="submit" variant="primary" className="w-full justify-center">
+        Pedir diagnóstico →
       </Button>
     </form>
   )

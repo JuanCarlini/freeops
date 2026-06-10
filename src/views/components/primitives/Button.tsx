@@ -11,26 +11,22 @@ interface ButtonProps {
 }
 
 const BASE =
-  'inline-flex items-center gap-2 font-sans font-medium text-sm px-6 py-3 transition-all duration-200 select-none outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+  'inline-flex items-center gap-2 font-sans font-medium text-sm px-6 py-3 select-none ' +
+  'rounded-[var(--radius-md)] transition-all duration-200 outline-none ' +
+  'active:scale-[0.98] ' +
+  'focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] ' +
+  'focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]'
 
-const VARIANTS: Record<string, React.CSSProperties> = {
-  primary: {
-    backgroundColor: 'var(--color-brand)',
-    color: 'var(--color-on-brand)',
-    borderRadius: 'var(--radius-md)',
-  },
-  outline: {
-    backgroundColor: 'transparent',
-    color: 'var(--color-brand)',
-    border: '1.5px solid var(--color-brand)',
-    borderRadius: 'var(--radius-md)',
-  },
-  ghost: {
-    backgroundColor: 'transparent',
-    color: 'var(--color-muted)',
-    border: '1.5px solid var(--color-border)',
-    borderRadius: 'var(--radius-md)',
-  },
+const VARIANT_CLASSES: Record<string, string> = {
+  primary:
+    'bg-[var(--color-brand)] text-[var(--color-on-brand)] ' +
+    'hover:bg-[var(--color-brand-mid)]',
+  outline:
+    'bg-transparent text-[var(--color-brand)] border-[1.5px] border-[var(--color-brand)] ' +
+    'hover:bg-[var(--color-brand)] hover:text-[var(--color-on-brand)]',
+  ghost:
+    'bg-transparent text-[var(--color-muted)] border-[1.5px] border-[var(--color-border)] ' +
+    'hover:border-[var(--color-brand)] hover:text-[var(--color-brand)]',
 }
 
 export function Button({
@@ -42,28 +38,20 @@ export function Button({
   type = 'button',
   disabled = false,
 }: ButtonProps) {
-  const style: React.CSSProperties = {
-    ...VARIANTS[variant],
-    opacity: disabled ? 0.45 : 1,
-    cursor: disabled ? 'not-allowed' : undefined,
-  }
+  const classes = `${BASE} ${VARIANT_CLASSES[variant]} ${
+    disabled ? 'opacity-45 pointer-events-none' : ''
+  } ${className}`
 
   if (href) {
     return (
-      <Link to={href} className={`${BASE} ${className}`} style={style}>
+      <Link to={href} className={classes} aria-disabled={disabled || undefined}>
         {children}
       </Link>
     )
   }
 
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={`${BASE} ${className}`}
-      style={style}
-    >
+    <button type={type} onClick={onClick} disabled={disabled} className={classes}>
       {children}
     </button>
   )

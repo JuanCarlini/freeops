@@ -22,6 +22,7 @@
   --color-brand-mid:  oklch(0.32 0.10 263);   /* mid navy for hover states */
   --color-accent:     oklch(0.50 0.18 255);   /* medium blue interactive */
   --color-on-brand:   oklch(0.940 0.012 87);  /* warm cream on brand bg */
+  --color-error:      oklch(0.48 0.17 25);    /* form validation errors */
 
   /* Typography — single sans family, weight contrast drives hierarchy        */
   /* Geist Variable: display (wght 800) + body (wght 400) same family        */
@@ -120,6 +121,38 @@
   font-weight: 700;
   letter-spacing: -0.028em;
   line-height: 1.05;
+}
+
+/* ─── Form Controls ──────────────────────────────────────────────────────── */
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-input::placeholder {
+  color: var(--color-muted);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-brand);
+}
+
+.form-input:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--color-bg),
+    0 0 0 4px var(--color-accent);
+}
+
+.form-input[aria-invalid='true'] {
+  border-color: var(--color-error);
 }
 
 /* ─── Animation Utilities ────────────────────────────────────────────────── */

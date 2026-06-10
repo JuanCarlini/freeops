@@ -93,7 +93,7 @@ function HeroSection() {
               <h1
                 className="text-display"
                 style={{
-                  fontSize: 'clamp(3.4rem, 8.5vw, 8.5rem)',
+                  fontSize: 'clamp(2.6rem, 8vw, 6rem)',
                   color: 'var(--color-heading)',
                   maxWidth: '14ch',
                 }}

@@ -32,11 +32,13 @@ export function ContactoPage() {
             <h1
               className="text-headline mb-5"
               style={{
-                fontSize: 'clamp(2.5rem, 5.5vw, 5.5rem)',
+                fontSize: 'clamp(2.2rem, 5vw, 4.5rem)',
                 color: 'var(--color-heading)',
+                textWrap: 'balance',
+                maxWidth: '16ch',
               }}
             >
-              Diagnóstico gratuito<br />de automatización.
+              Diagnóstico gratuito de automatización.
             </h1>
             <p
               className="text-lg max-w-xl leading-relaxed"

@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom'
 import { RootLayout } from './views/layout/RootLayout'
 import { HomePage } from './views/pages/HomePage'
 import { ServiciosPage } from './views/pages/ServiciosPage'
@@ -29,9 +29,9 @@ const router = createBrowserRouter([
             >
               Página no encontrada.
             </h1>
-            <a href="/" className="font-mono text-sm" style={{ color: 'var(--color-muted)' }}>
+            <Link to="/" className="font-mono text-sm" style={{ color: 'var(--color-muted)' }}>
               ← Volver al inicio
-            </a>
+            </Link>
           </div>
         ),
       },
