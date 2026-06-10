@@ -171,7 +171,7 @@ function ServicesSection() {
   const visibleLetters = WORD_LETTERS.filter(({ keep }) => !lettersCollapsed || keep)
 
   return (
-    <div ref={containerRef} style={{ height: '210vh' }}>
+    <div ref={containerRef} style={{ height: '210vh' }} data-nav-dark>
       <div
         style={{
           position: 'sticky',
@@ -480,7 +480,7 @@ function CasosSection() {
 // ─── CTA — panel navy ─────────────────────────────────────────────────────
 function CTASection() {
   return (
-    <section style={{ backgroundColor: 'var(--color-brand)' }}>
+    <section style={{ backgroundColor: 'var(--color-brand)' }} data-nav-dark>
       <div className="max-w-7xl mx-auto px-6 lg:px-14 py-24 md:py-36 w-full">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
