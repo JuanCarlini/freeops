@@ -30,11 +30,7 @@ function HeroSection() {
 
   const smooth = useSpring(scrollYProgress, { damping: 25, stiffness: 120 })
 
-  // Scroll hint: desaparece rápido (mismo que antes)
-  const hintOpacity = useTransform(smooth, [0, 0.10], [1, 0])
-  const hintY       = useTransform(smooth, [0, 0.10], [0, -12])
-
-  // Headline: VISIBLE desde el inicio, desaparece al scrollear
+  // Headline + bajada: visibles desde el inicio, desaparecen al scrollear
   const headlineOpacity = useTransform(smooth, [0.05, 0.42], [1, 0])
   const headlineY       = useTransform(smooth, [0.05, 0.42], [0, -48])
 
@@ -46,7 +42,7 @@ function HeroSection() {
   const canvasScale = useTransform(smooth, [0, 1], [1, 1.04])
 
   return (
-    <div ref={containerRef} style={{ height: '170vh' }}>
+    <div ref={containerRef} style={{ height: '135vh' }}>
       <div
         style={{
           position: 'sticky',
@@ -64,23 +60,6 @@ function HeroSection() {
           <ParticleCanvas />
         </motion.div>
 
-        {/* Scroll hint */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 pointer-events-none"
-          style={{ opacity: hintOpacity, y: hintY }}
-        >
-          <span
-            className="font-mono text-xs uppercase tracking-widest"
-            style={{ color: 'var(--color-muted)' }}
-          >
-            scroll
-          </span>
-          <div
-            className="w-px h-10"
-            style={{ backgroundColor: 'var(--color-border)' }}
-          />
-        </motion.div>
-
         {/* Headline + CTAs — visibles desde el inicio */}
         <div
           className="absolute inset-0 flex flex-col justify-center z-10"
@@ -88,7 +67,7 @@ function HeroSection() {
         >
           <div className="max-w-7xl mx-auto px-6 lg:px-14 w-full">
 
-            {/* Headline */}
+            {/* Headline + bajada */}
             <motion.div style={{ opacity: headlineOpacity, y: headlineY }}>
               <h1
                 className="text-display"
@@ -104,6 +83,14 @@ function HeroSection() {
                   operativa.
                 </span>
               </h1>
+              <p
+                className="mt-7 text-base md:text-lg leading-relaxed"
+                style={{ color: 'var(--color-muted)', maxWidth: '46ch' }}
+              >
+                Eliminamos el trabajo manual repetitivo de atención, ventas y
+                administración. Conectamos las herramientas que ya usás:
+                WhatsApp, CRM, planillas, correo.
+              </p>
             </motion.div>
 
             {/* CTAs */}
@@ -319,11 +306,8 @@ function ServicesSection() {
 // ─── Manifiesto — tipografía pura ────────────────────────────────────────
 function ManifestoSection() {
   return (
-    <section
-      className="min-h-[90dvh] flex flex-col justify-center"
-      style={{ backgroundColor: 'var(--color-bg)' }}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-14 py-28 w-full">
+    <section style={{ backgroundColor: 'var(--color-bg)' }}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-14 py-32 md:py-44 w-full">
         <motion.p
           className="text-headline"
           style={{
@@ -499,11 +483,8 @@ function CasosSection() {
 // ─── CTA — panel navy ─────────────────────────────────────────────────────
 function CTASection() {
   return (
-    <section
-      className="min-h-[60dvh] flex flex-col justify-center"
-      style={{ backgroundColor: 'var(--color-brand)' }}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-14 py-24 w-full">
+    <section style={{ backgroundColor: 'var(--color-brand)' }}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-14 py-24 md:py-36 w-full">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
