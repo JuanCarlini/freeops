@@ -16,16 +16,16 @@ interface ParticleCanvasProps {
   connectionOpacity?: number
 }
 
-const CONNECT_DIST  = 130
-const MOUSE_DIST    = 170
-const MOUSE_FORCE   = 0.032
+const CONNECT_DIST  = 160   // wider connections = denser graph
+const MOUSE_DIST    = 200   // mouse influence range
+const MOUSE_FORCE   = 0.048 // stronger attraction
 const FRICTION      = 0.975
 
 export function ParticleCanvas({
   className,
   particleColor    = '0, 33, 87',
-  particleOpacity  = 0.48,
-  connectionOpacity = 0.11,
+  particleOpacity  = 0.55,
+  connectionOpacity = 0.20,
 }: ParticleCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -110,6 +110,7 @@ export function ParticleCanvas({
       animId = requestAnimationFrame(frame)
     }
 
+    // Listen on window so the canvas reacts even when UI overlays it
     const onMove = (e: MouseEvent) => {
       const rect = canvas!.getBoundingClientRect()
       mouse.x = e.clientX - rect.left
@@ -125,14 +126,14 @@ export function ParticleCanvas({
     resize()
     frame()
 
-    canvas.addEventListener('mousemove', onMove)
-    canvas.addEventListener('mouseleave', onLeave)
+    window.addEventListener('mousemove', onMove, { passive: true })
+    window.addEventListener('mouseleave', onLeave)
 
     return () => {
       cancelAnimationFrame(animId)
       ro.disconnect()
-      canvas.removeEventListener('mousemove', onMove)
-      canvas.removeEventListener('mouseleave', onLeave)
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseleave', onLeave)
     }
   }, [particleColor, particleOpacity, connectionOpacity])
 

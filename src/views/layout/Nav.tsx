@@ -32,13 +32,14 @@ export function Nav() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
 
-        {/* Logo */}
+        {/* Logo — FREE en navy, OPS en accent */}
         <Link
           to="/"
-          className="font-display font-bold text-lg tracking-tight"
-          style={{ color: 'var(--color-brand)' }}
+          className="font-display text-xl tracking-tight select-none"
+          style={{ fontWeight: 800, lineHeight: 1 }}
         >
-          FREEOPS
+          <span style={{ color: 'var(--color-heading)' }}>FREE</span>
+          <span style={{ color: 'var(--color-accent)' }}>OPS</span>
         </Link>
 
         {/* Desktop nav */}

@@ -202,7 +202,7 @@ function ValuesSection() {
             >
               <div
                 className="font-display font-bold text-3xl"
-                style={{ color: 'var(--color-border)', lineHeight: 1 }}
+                style={{ color: 'oklch(0.78 0.025 87)', lineHeight: 1 }}
               >
                 {v.n}
               </div>

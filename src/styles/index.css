@@ -1,13 +1,10 @@
 @import "tailwindcss";
 
 /* ─── Fonts ──────────────────────────────────────────────────────────────── */
-@import "@fontsource/syne/700.css";
-@import "@fontsource/syne/800.css";
-@import "@fontsource/plus-jakarta-sans/400.css";
-@import "@fontsource/plus-jakarta-sans/500.css";
-@import "@fontsource/plus-jakarta-sans/600.css";
-@import "@fontsource/ibm-plex-mono/400.css";
-@import "@fontsource/ibm-plex-mono/500.css";
+/* Geist Variable — wght 100-900, single family for display + body           */
+/* Geist Mono Variable — wght 100-900, for technical labels + code           */
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
 
 /* ─── Design Tokens ─────────────────────────────────────────────────────── */
 @theme {
@@ -26,10 +23,11 @@
   --color-accent:     oklch(0.50 0.18 255);   /* medium blue interactive */
   --color-on-brand:   oklch(0.940 0.012 87);  /* warm cream on brand bg */
 
-  /* Typography */
-  --font-display: "Syne", system-ui, sans-serif;
-  --font-sans:    "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-mono:    "IBM Plex Mono", "Courier New", monospace;
+  /* Typography — single sans family, weight contrast drives hierarchy        */
+  /* Geist Variable: display (wght 800) + body (wght 400) same family        */
+  --font-display: "Geist Variable", system-ui, sans-serif;
+  --font-sans:    "Geist Variable", system-ui, sans-serif;
+  --font-mono:    "Geist Mono Variable", "Courier New", monospace;
 
   /* Radius — near-sharp, slight softening */
   --radius-sm: 2px;
@@ -54,26 +52,30 @@
 }
 
 /* ─── Base Reset ──────────────────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* Wrapped in @layer base so Tailwind utilities (@layer utilities) take        */
+/* precedence over this reset — without this, padding:0 overrides pt-*, py-*  */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-  background-color: var(--color-bg);
-}
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    background-color: var(--color-bg);
+  }
 
-body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-sans);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
 }
 
 /* ─── Custom Cursor ──────────────────────────────────────────────────────── */
@@ -109,14 +111,14 @@ body {
 .text-display {
   font-family: var(--font-display);
   font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 0.95;
+  letter-spacing: -0.035em;  /* Geist 800 benefits from tighter tracking     */
+  line-height: 0.93;          /* Geist ascenders are taller than Syne's      */
 }
 
 .text-headline {
   font-family: var(--font-display);
   font-weight: 700;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.028em;
   line-height: 1.05;
 }
 
@@ -144,3 +146,4 @@ body {
   }
   html { scroll-behavior: auto; }
 }
+

@@ -36,9 +36,7 @@ export function ContactoPage() {
                 color: 'var(--color-heading)',
               }}
             >
-              Diagnóstico gratuito
-              <br />
-              de automatización.
+              Diagnóstico gratuito<br />de automatización.
             </h1>
             <p
               className="text-lg max-w-xl leading-relaxed"
@@ -122,7 +120,7 @@ export function ContactoPage() {
                     <div key={item.label}>
                       <p
                         className="font-mono text-xs mb-1"
-                        style={{ color: 'var(--color-border)' }}
+                        style={{ color: 'oklch(0.62 0.04 87)' }}
                       >
                         {item.label}
                       </p>
@@ -143,7 +141,7 @@ export function ContactoPage() {
                   <div>
                     <p
                       className="font-mono text-xs mb-1"
-                      style={{ color: 'var(--color-border)' }}
+                      style={{ color: 'oklch(0.62 0.04 87)' }}
                     >
                       UBICACIÓN
                     </p>
@@ -158,7 +156,7 @@ export function ContactoPage() {
                   <div>
                     <p
                       className="font-mono text-xs mb-1"
-                      style={{ color: 'var(--color-border)' }}
+                      style={{ color: 'oklch(0.62 0.04 87)' }}
                     >
                       RESPUESTA
                     </p>
