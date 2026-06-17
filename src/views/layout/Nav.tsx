@@ -66,8 +66,13 @@ export function Nav() {
   // El drawer abierto fuerza tema claro para que panel y header coincidan
   const dark = sectionDark && !menuOpen
 
-  // Cierra el menú al navegar
-  useEffect(() => setMenuOpen(false), [pathname])
+  // Cierra el menú al navegar: ajuste de estado durante render (sin efecto),
+  // cubre clicks, back/forward y cualquier otra causa de cambio de ruta
+  const [prevPath, setPrevPath] = useState(pathname)
+  if (prevPath !== pathname) {
+    setPrevPath(pathname)
+    setMenuOpen(false)
+  }
 
   // Drawer abierto: bloquea el scroll del body y cierra con Escape
   useEffect(() => {

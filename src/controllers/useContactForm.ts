@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { CONTACT_EMAIL } from '@/models/contact.data'
 
+const FORMSPREE_URL = 'https://formspree.io/f/mzdqjqjl'
+
 interface FormData {
   nombre: string
   email: string
@@ -10,7 +12,7 @@ interface FormData {
 
 export type FieldErrors = Partial<Record<keyof FormData, string>>
 
-type FormStatus = 'idle' | 'success'
+export type FormStatus = 'idle' | 'sending' | 'success' | 'error'
 
 const INITIAL: FormData = {
   nombre: '',
@@ -38,19 +40,6 @@ function validate(data: FormData): FieldErrors {
   return errors
 }
 
-function buildMailto(data: FormData): string {
-  const subject = `Diagnóstico FREEOPS: ${data.nombre.trim()}`
-  const body = [
-    `Nombre: ${data.nombre.trim()}`,
-    `Email: ${data.email.trim()}`,
-    `Área de interés: ${data.area}`,
-    '',
-    'Descripción del problema:',
-    data.descripcion.trim(),
-  ].join('\n')
-  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-}
-
 export function useContactForm() {
   const [formData, setFormData] = useState<FormData>(INITIAL)
   const [errors, setErrors] = useState<FieldErrors>({})
@@ -61,7 +50,6 @@ export function useContactForm() {
   ) => {
     const name = e.target.name as keyof FormData
     setFormData((prev) => ({ ...prev, [name]: e.target.value }))
-    // Limpia el error del campo apenas el usuario lo corrige
     if (errors[name]) {
       setErrors((prev) => {
         const next = { ...prev }
@@ -71,14 +59,33 @@ export function useContactForm() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const found = validate(formData)
     setErrors(found)
     if (Object.keys(found).length > 0) return
 
-    window.location.href = buildMailto(formData)
-    setStatus('success')
+    setStatus('sending')
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:        formData.nombre.trim(),
+          email:       formData.email.trim(),
+          area:        formData.area,
+          message:     formData.descripcion.trim(),
+        }),
+      })
+      if (res.ok) {
+        setStatus('success')
+        setFormData(INITIAL)
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
   const reset = () => {

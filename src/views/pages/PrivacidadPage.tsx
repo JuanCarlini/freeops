@@ -6,7 +6,7 @@ const ease = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const SECTIONS = [
   {
     title: 'Qué datos manejamos',
-    body: 'Este sitio no usa cookies, no instala trackers y no tiene analítica de terceros. El formulario de contacto no envía datos a ningún servidor nuestro: abre tu propio cliente de correo con el mensaje cargado, y el envío lo hacés vos desde tu casilla.',
+    body: 'Este sitio no usa cookies, no instala trackers y no tiene analítica de terceros. Lo único que registramos es un conteo anónimo de visitas en infraestructura propia: qué página se vio, desde qué país y cuándo, sin cookies ni identificadores personales. El formulario de contacto no envía datos a ningún servidor nuestro: abre tu propio cliente de correo con el mensaje cargado, y el envío lo hacés vos desde tu casilla.',
   },
   {
     title: 'Qué pasa con tu consulta',

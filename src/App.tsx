@@ -1,24 +1,41 @@
 import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom'
 import { MotionConfig } from 'motion/react'
+import { Analytics } from '@vercel/analytics/react'
 import { RootLayout } from './views/layout/RootLayout'
 import { HomePage } from './views/pages/HomePage'
-import { ServiciosPage } from './views/pages/ServiciosPage'
-import { NosotrosPage } from './views/pages/NosotrosPage'
-import { CasosPage } from './views/pages/CasosPage'
-import { ContactoPage } from './views/pages/ContactoPage'
-import { PrivacidadPage } from './views/pages/PrivacidadPage'
 
+// Páginas secundarias en chunks propios: el router espera el import antes de
+// navegar (sin flash de loading) y el bundle inicial solo carga la home.
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'servicios', element: <ServiciosPage /> },
-      { path: 'nosotros', element: <NosotrosPage /> },
-      { path: 'casos', element: <CasosPage /> },
-      { path: 'contacto', element: <ContactoPage /> },
-      { path: 'privacidad', element: <PrivacidadPage /> },
+      {
+        path: 'servicios',
+        lazy: () =>
+          import('./views/pages/ServiciosPage').then((m) => ({ Component: m.ServiciosPage })),
+      },
+      {
+        path: 'nosotros',
+        lazy: () =>
+          import('./views/pages/NosotrosPage').then((m) => ({ Component: m.NosotrosPage })),
+      },
+      {
+        path: 'casos',
+        lazy: () => import('./views/pages/CasosPage').then((m) => ({ Component: m.CasosPage })),
+      },
+      {
+        path: 'contacto',
+        lazy: () =>
+          import('./views/pages/ContactoPage').then((m) => ({ Component: m.ContactoPage })),
+      },
+      {
+        path: 'privacidad',
+        lazy: () =>
+          import('./views/pages/PrivacidadPage').then((m) => ({ Component: m.PrivacidadPage })),
+      },
       {
         path: '*',
         element: (
@@ -46,6 +63,7 @@ export function App() {
   return (
     <MotionConfig reducedMotion="user">
       <RouterProvider router={router} />
+      <Analytics />
     </MotionConfig>
   )
 }

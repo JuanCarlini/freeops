@@ -4,4 +4,4 @@ Sitio web institucional de FREEOPS — estudio de automatización e inteligencia
 
 FREEOPS construye sistemas que eliminan el trabajo repetitivo en operaciones de empresas: atención al cliente, procesos internos, ventas, finanzas e infraestructura. Sin overhead, sin hype, con handoff real.
 
-**[freeops.ai](https://freeops.ai)**
+**[freeops.ai](https://freeops.ai)** · producción actual: [freeops.vercel.app](https://freeops.vercel.app)

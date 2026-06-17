@@ -12,11 +12,20 @@ dist
 dist-ssr
 *.local
 
-# Screenshots / debug images
+# Screenshots / debug images (los assets reales del sitio en public/ NO se ignoran)
 *.png
 *.jpg
 *.jpeg
 *.webp
+!public/**
+
+# Variables de entorno: nunca commitear secretos reales
+.env*
+!.env.example
+
+# Playwright
+test-results
+playwright-report
 
 # Editor directories and files
 .vscode/*
