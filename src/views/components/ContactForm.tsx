@@ -63,29 +63,19 @@ export function ContactForm() {
           className="font-mono text-xs uppercase tracking-widest mb-4"
           style={{ color: 'var(--color-accent)' }}
         >
-          Mensaje listo
+          Mensaje recibido
         </div>
         <p
           className="text-xl font-display font-bold mb-2"
           style={{ color: 'var(--color-heading)' }}
         >
-          Se abrió tu correo con el mensaje cargado.
-        </p>
-        <p className="text-sm leading-relaxed mb-2" style={{ color: 'var(--color-muted)' }}>
-          Envialo y te respondemos en menos de 24 horas hábiles.
+          Lo recibimos.
         </p>
         <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--color-muted)' }}>
-          ¿No se abrió? Escribinos directo a{' '}
-          <a
-            href={`mailto:${contactEmail}`}
-            className="font-medium underline underline-offset-2"
-            style={{ color: 'var(--color-brand)' }}
-          >
-            {contactEmail}
-          </a>
+          Te respondemos en menos de 24 horas hábiles.
         </p>
         <Button onClick={reset} variant="outline">
-          Cargar otro mensaje
+          Enviar otro mensaje
         </Button>
       </div>
     )
@@ -158,13 +148,25 @@ export function ContactForm() {
         />
       </Field>
 
-      <p className="text-xs leading-relaxed" style={{ color: 'var(--color-muted)' }}>
-        Al enviar se abre tu correo con el mensaje ya cargado. No guardamos tus datos en ningún
-        servidor.
-      </p>
+      {status === 'error' && (
+        <p className="text-sm" style={{ color: 'oklch(0.50 0.18 20)' }}>
+          Error al enviar. Intentá de nuevo o escribinos a{' '}
+          <a
+            href={`mailto:${contactEmail}`}
+            style={{ color: 'inherit', textDecoration: 'underline' }}
+          >
+            {contactEmail}
+          </a>
+        </p>
+      )}
 
-      <Button type="submit" variant="primary" className="w-full justify-center">
-        Pedir diagnóstico →
+      <Button
+        type="submit"
+        variant="primary"
+        disabled={status === 'sending'}
+        className="w-full justify-center"
+      >
+        {status === 'sending' ? 'Enviando...' : 'Pedir diagnóstico →'}
       </Button>
     </form>
   )

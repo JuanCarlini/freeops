@@ -169,7 +169,7 @@ export function ServiciosPage() {
                 maxWidth: '18ch',
               }}
             >
-              Seis áreas donde eliminamos trabajo manual.
+              Chau trabajo manual, HOLA optimización.
             </h1>
             <p
               className="text-lg max-w-xl leading-relaxed"

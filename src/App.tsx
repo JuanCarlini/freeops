@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom'
 import { MotionConfig } from 'motion/react'
+import { Analytics } from '@vercel/analytics/react'
 import { RootLayout } from './views/layout/RootLayout'
 import { HomePage } from './views/pages/HomePage'
 
@@ -62,6 +63,7 @@ export function App() {
   return (
     <MotionConfig reducedMotion="user">
       <RouterProvider router={router} />
+      <Analytics />
     </MotionConfig>
   )
 }
